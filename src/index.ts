@@ -1,9 +1,4 @@
-import {
-  ESLintUtils,
-  TSESTree,
-  AST_NODE_TYPES,
-} from "@typescript-eslint/utils";
-import { RuleListener } from "@typescript-eslint/utils/dist/ts-eslint";
+import { ESLintUtils, TSESTree } from "@typescript-eslint/utils";
 
 const createRule = ESLintUtils.RuleCreator(
   (name) => `https://example.com/rule/${name}`
@@ -39,7 +34,7 @@ export const rule = createRule<[Options], MessageIds>({
 
     const checkComments = (node: CheckNode) => {
       const beforeComment = sourceCode.getCommentsBefore(node);
-      console.log(beforeComment.length, "=====beforeComment", node.type);
+      // console.log(beforeComment.length, "=====beforeComment", node.type);
       if (!beforeComment.length) {
         context.report({
           messageId: "missingTypescriptDocumentComments",
@@ -60,7 +55,7 @@ export const rule = createRule<[Options], MessageIds>({
     ];
 
     const rulesHandler: { [k in keyof Options]: (n: CheckNode) => void } = {};
-    console.log(options, "====options");
+    // console.log(options, "====options");
     optKeys.forEach((ruleKey) => {
       if (options[ruleKey] === true) {
         rulesHandler[ruleKey] = checkComments;
